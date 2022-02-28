@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class WorkerBuilder {
 
-    private Worker worker;
+    private Worker worker = new Worker();
 
     public WorkerBuilder setId(long id){
         this.worker.setId(id);
@@ -24,6 +24,11 @@ public class WorkerBuilder {
 
     public WorkerBuilder setPositionId(long id){
         this.worker.setPositionId(id);
+        return this;
+    }
+
+    public WorkerBuilder setImg(String img){
+        this.worker.setImg(img);
         return this;
     }
 

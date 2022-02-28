@@ -1,17 +1,17 @@
-package com.example.databaseapp.Database;
+package com.example.databaseapp.Worker;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-class OpenHelper extends SQLiteOpenHelper {
+public class OpenHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME    = "DbExample";
     private static final int    DATABASE_VERSION = 1;
 
     private static final String TABLE_WORKER = "worker";
 
-    OpenHelper(Context ctx) {
+    public OpenHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

@@ -1,7 +1,9 @@
 package com.example.databaseapp.Worker;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class Worker implements Serializable {
@@ -10,6 +12,8 @@ public class Worker implements Serializable {
     private String name     = "";
     private Date dateBorn   = new Date();
     private long positionId = 1;
+    private String img      = "kek";
+
 
     public void setName(String name) {
         this.name = name;
@@ -27,6 +31,10 @@ public class Worker implements Serializable {
         this.positionId = positionId;
     }
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,6 +49,15 @@ public class Worker implements Serializable {
 
     public long getPositionId() {
         return positionId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public String getDbDateBorn() {
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+        return formatter.format(this.dateBorn);
     }
 }
 
