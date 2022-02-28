@@ -33,6 +33,18 @@ public class DbWorkers {
     }
 
 
+    public long[] insertMany(ArrayList<Worker> workers) {
+
+        long[] numbers = new long[workers.size()];
+
+        workers.forEach((Worker worker) -> {
+            this.insert(worker);
+        });
+
+        return numbers;
+    }
+
+
     public ArrayList<Worker> getMany(int skip, int take){
 
         Cursor            cursor  = db.query(DbWorkers.tableName, null, null, null, null, null, "id DESC", skip + ", " + take);

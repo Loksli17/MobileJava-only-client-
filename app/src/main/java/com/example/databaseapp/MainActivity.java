@@ -11,13 +11,19 @@ import android.os.Bundle;
 import com.example.databaseapp.Database.DbWorkers;
 import com.example.databaseapp.Worker.Worker;
 import com.example.databaseapp.Worker.WorkerBuilder;
+import com.example.databaseapp.Worker.WorkerDirector;
 
+import java.util.ArrayList;
 import java.util.Date;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
     DbWorkers workersDbConn;
+    ArrayList<Worker> workers = new ArrayList<>();
+
+    int take = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +36,35 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        this.createWorker();
+        this.getWorkers();
+
+//        this.createWorkers();
     }
 
-    
-    private void createWorker(){
 
-        Worker worker = new WorkerBuilder()
-                .setId(1)
-                .setName("Ivan Kuharenko")
-                .setImg("kuhar")
-//                .setDateBorn(new Date("1989-09-05"))
-                .setPositionId(1)
-                .getWorker();
+    private void createWorkers(){
 
         AsyncTask.execute(() -> {
             try {
-                workersDbConn.insert(worker);
-                System.out.print(worker.getId());
+                ArrayList<Worker> workers = WorkerDirector.execute();
+                workersDbConn.insertMany(workers);
             } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void getWorkers() {
+
+        AsyncTask.execute(() -> {
+            try {
+                ArrayList<Worker> workersDb = workersDbConn.getMany(0, take);
+
+                runOnUiThread(() -> {
+                    workers.addAll(workersDb);
+                    System.out.print(workers.size());
+                });
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
