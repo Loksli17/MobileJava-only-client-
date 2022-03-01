@@ -32,6 +32,12 @@ public class WorkerViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null){
+            id = extras.getLong("id");
+        }
+
         getWorker();
     }
 

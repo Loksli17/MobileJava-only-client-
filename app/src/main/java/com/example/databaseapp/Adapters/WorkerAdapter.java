@@ -3,6 +3,7 @@ package com.example.databaseapp.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,18 +44,25 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Worker worker = workers.get(position);
 
         holder.workerName.setText(worker.getName());
-//        Drawable res = getResources().getDrawable(imageResource);
-        holder.workerImage.setImageResource(R.drawable.image1);
+
+        String uri = "@drawable/" + worker.getImg();
+        int imageResource = inflater.getContext().getResources().getIdentifier(uri, null, inflater.getContext().getPackageName());
+        Drawable res = inflater.getContext().getResources().getDrawable(imageResource);
+        holder.workerImage.setImageDrawable(res);
+
         holder.workerPosition.setText(String.valueOf(worker.getPositionId()));
 
         holder.moreWorkerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context ctx = inflater.getContext(); //This is amazing way to get current Activity =))))
+
                 Intent intent = new Intent(ctx, WorkerViewActivity.class);
+                intent.putExtra("id", worker.getId());
                 ctx.startActivity(intent);
             }
         });

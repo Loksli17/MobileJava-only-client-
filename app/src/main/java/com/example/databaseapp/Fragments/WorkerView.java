@@ -1,11 +1,13 @@
 package com.example.databaseapp.Fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +99,15 @@ public class WorkerView extends Fragment {
 
 
     private void pushDataInFragment(){
-        imageView.setImageResource(R.drawable.image1);
+
+        String uri = "@drawable/" + img;
+        int imageResource = getResources().getIdentifier(uri, null, getContext().getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+
+        Log.d("img", img);
+
+        imageView.setImageDrawable(res);
+
         nameView.setText(name);
         positionView.setText(position);
         cvView.setText(cv);

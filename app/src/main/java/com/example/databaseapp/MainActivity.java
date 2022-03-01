@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.databaseapp.Adapters.WorkerAdapter;
@@ -51,9 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-        Log.d("QUERY", "ONCREATE");
         this.getWorkers();
-//        this.createWorkers();
+        this.bindCreateWorkersBtn();
+    }
+
+
+    private void bindCreateWorkersBtn(){
+
+        Button btn = findViewById(R.id.createWorkersBtn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createWorkers();
+            }
+        });
     }
 
 
@@ -61,13 +75,20 @@ public class MainActivity extends AppCompatActivity {
 
         AsyncTask.execute(() -> {
             try {
-                ArrayList<Worker> workers = WorkerDirector.execute();
-                workersDbConn.insertMany(workers);
+                ArrayList<Worker> newWorkers = WorkerDirector.execute();
+                workersDbConn.insertMany(newWorkers);
+                workers.addAll(newWorkers);
+
+                runOnUiThread(() -> {
+                    Toast.makeText(MainActivity.this, "New workers was created", Toast.LENGTH_SHORT).show();
+                    adapter.notifyDataSetChanged();
+                });
             } catch (Exception e){
                 e.printStackTrace();
             }
         });
     }
+
 
     private void getWorkers() {
 
@@ -78,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     Toast.makeText(MainActivity.this, "Workers were downloaded", Toast.LENGTH_SHORT).show();
-                    Log.d("fuck", String.valueOf(workers.size()));
                     adapter.notifyDataSetChanged();
                 });
             } catch (Exception e) {
