@@ -53,7 +53,7 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
         holder.moreWorkerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context ctx = inflater.getContext();
+                Context ctx = inflater.getContext(); //This is amazing way to get current Activity =))))
                 Intent intent = new Intent(ctx, WorkerViewActivity.class);
                 ctx.startActivity(intent);
             }
@@ -67,7 +67,7 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView workerName, workerPosition;
         public ImageView workerImage;

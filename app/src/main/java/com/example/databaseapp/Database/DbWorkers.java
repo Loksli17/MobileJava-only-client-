@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class  DbWorkers {
+public class DbWorkers {
 
     private final static String tableName = "worker";
     private SQLiteDatabase db;
@@ -50,12 +50,8 @@ public class  DbWorkers {
 
     public ArrayList<Worker> getMany(int skip, int take){
 
-        Log.d("QUERY", "GetMany start");
-
-        Cursor            cursor  = db.query("worker", null, null, null, null, null, "id DESC", skip + ", " + take);
+        Cursor            cursor  = db.query(DbWorkers.tableName, null, null, null, null, null, "id DESC", skip + ", " + take);
         ArrayList<Worker> workers = new ArrayList<>();
-
-        Log.d("QUERY", "kek");
 
         cursor.moveToFirst();
 
@@ -67,12 +63,42 @@ public class  DbWorkers {
                 long   positionId = cursor.getLong(3);
                 String img        = cursor.getString(4);
 
-                Worker worker = new WorkerBuilder().setId(id).setDateBorn(new Date()).setImg(img).setName(name).setPositionId(positionId).getWorker();
+                //It is OOP pattern Builder. Why pattern? Because I wanna flex.
+                Worker worker = new WorkerBuilder()
+                        .setId(id)
+                        .setDateBorn(new Date())
+                        .setImg(img).setName(name)
+                        .setPositionId(positionId)
+                        .getWorker();
+
                 workers.add(worker);
             } while (cursor.moveToNext());
         }
 
         return workers;
+    }
+
+
+    public Worker getOne(long id) {
+
+        Cursor cursor = db.rawQuery("Select * from " + DbWorkers.tableName + " where id = " + id, null);
+        Worker worker = new Worker();
+
+        cursor.moveToFirst();
+
+        String name       = cursor.getString(1);
+//                Date   dateBorn   = new Date(cursor.getString(2));
+        long   positionId = cursor.getLong(3);
+        String img        = cursor.getString(4);
+
+        worker = new WorkerBuilder()
+                .setId(id)
+                .setDateBorn(new Date())
+                .setImg(img).setName(name)
+                .setPositionId(positionId)
+                .getWorker();
+
+        return worker;
     }
 
 }

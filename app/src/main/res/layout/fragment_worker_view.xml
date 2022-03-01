@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="true"
     tools:context=".Fragments.WorkerView">
 
     <!-- TODO: Update blank fragment layout -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:isScrollContainer="true">
 
         <ImageView
             android:id="@+id/workerViewImage"
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="20dp"
@@ -23,7 +25,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/image3" />
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/wokerViewName"
@@ -51,7 +53,7 @@
             app:layout_constraintTop_toBottomOf="@+id/wokerViewName" />
 
         <TextView
-            android:id="@+id/workerCV"
+            android:id="@+id/workerViewCV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -71,7 +73,7 @@
             android:paddingRight="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/workerCV">
+            app:layout_constraintTop_toBottomOf="@+id/workerViewCV">
 
             <Button
                 android:id="@+id/button"

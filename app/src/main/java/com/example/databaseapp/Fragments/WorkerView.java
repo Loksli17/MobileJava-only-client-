@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.databaseapp.R;
 
@@ -22,12 +23,23 @@ public class WorkerView extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "id";
+    private static final String ARG_PARAM2 = "name";
+    private static final String ARG_PARAM3 = "img";
+    private static final String ARG_PARAM4 = "position";
+    private static final String ARG_PARAM5 = "cv";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private long id;
+    private String name;
+    private String img;
+    private String position;
+    private String cv;
+
+    ImageView imageView;
+    TextView nameView;
+    TextView positionView;
+    TextView cvView;
 
     public WorkerView() {
         // Required empty public constructor
@@ -55,11 +67,12 @@ public class WorkerView extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            id       = getArguments().getLong(ARG_PARAM1);
+            name     = getArguments().getString(ARG_PARAM2);
+            img      = getArguments().getString(ARG_PARAM3);
+            position = getArguments().getString(ARG_PARAM4);
+            cv       = getArguments().getString(ARG_PARAM5);
         }
-
-
     }
 
     @Override
@@ -74,7 +87,19 @@ public class WorkerView extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageView imageView = view.findViewById(R.id.workerViewImage);
+        imageView    = view.findViewById(R.id.workerViewImage);
+        nameView     = view.findViewById(R.id.wokerViewName);
+        positionView = view.findViewById(R.id.workerViewPosition);
+        cvView       = view.findViewById(R.id.workerViewCV);
+
+        this.pushDataInFragment();
+    }
+
+
+    private void pushDataInFragment(){
         imageView.setImageResource(R.drawable.image1);
+        nameView.setText(name);
+        positionView.setText(position);
+        cvView.setText(cv);
     }
 }

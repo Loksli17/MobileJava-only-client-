@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-
         Log.d("QUERY", "ONCREATE");
         this.getWorkers();
 //        this.createWorkers();
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 workers.addAll(workersDb);
 
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "Workers were downloaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Workers were downloaded", Toast.LENGTH_SHORT).show();
                     Log.d("fuck", String.valueOf(workers.size()));
                     adapter.notifyDataSetChanged();
                 });
