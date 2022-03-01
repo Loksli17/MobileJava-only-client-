@@ -1,6 +1,7 @@
 package com.example.databaseapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.databaseapp.R;
 import com.example.databaseapp.Worker.Worker;
+import com.example.databaseapp.WorkerViewActivity;
 
 import java.util.List;
 
@@ -47,6 +49,15 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 //        Drawable res = getResources().getDrawable(imageResource);
         holder.workerImage.setImageResource(R.drawable.image1);
         holder.workerPosition.setText(String.valueOf(worker.getPositionId()));
+
+        holder.moreWorkerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context ctx = inflater.getContext();
+                Intent intent = new Intent(ctx, WorkerViewActivity.class);
+                ctx.startActivity(intent);
+            }
+        });
     }
 
     @Override

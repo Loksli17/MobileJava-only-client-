@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class DbWorkers {
+public class  DbWorkers {
 
     private final static String tableName = "worker";
     private SQLiteDatabase db;
@@ -22,7 +22,7 @@ public class DbWorkers {
     public DbWorkers(Context ctx){
         OpenHelper openHelper = new OpenHelper(ctx);
         this.db = openHelper.getWritableDatabase();
-//        openHelper.onUpgrade(this.db, 1, 2);
+//        openHelper.onUpgrade(this.db, 1, 2); //! for db update. You should uncommit this code for update db
     }
 
 
