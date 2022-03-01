@@ -1,13 +1,19 @@
 package com.example.databaseapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.databaseapp.Adapters.WorkerAdapter;
 import com.example.databaseapp.Database.DbWorkers;
 import com.example.databaseapp.Worker.Worker;
 import com.example.databaseapp.Worker.WorkerBuilder;
@@ -22,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     DbWorkers workersDbConn;
     ArrayList<Worker> workers = new ArrayList<>();
+    WorkerAdapter adapter;
 
     int take = 10;
 
@@ -36,8 +43,17 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        this.getWorkers();
+        adapter = new WorkerAdapter(this, workers);
+        RecyclerView recyclerView = findViewById(R.id.WorkerAdapterView);
 
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        adapter.notifyDataSetChanged();
+
+
+        Log.d("QUERY", "ONCREATE");
+        this.getWorkers();
 //        this.createWorkers();
     }
 
@@ -59,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask.execute(() -> {
             try {
                 ArrayList<Worker> workersDb = workersDbConn.getMany(0, take);
+                workers.addAll(workersDb);
 
                 runOnUiThread(() -> {
-                    workers.addAll(workersDb);
-                    System.out.print(workers.size());
+                    Toast.makeText(this, "Workers were downloaded", Toast.LENGTH_SHORT).show();
+                    Log.d("fuck", String.valueOf(workers.size()));
+                    adapter.notifyDataSetChanged();
                 });
             } catch (Exception e) {
                 e.printStackTrace();

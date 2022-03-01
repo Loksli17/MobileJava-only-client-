@@ -18,7 +18,7 @@ public class OpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "Create table " + TABLE_WORKER
-                + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, dateBorn DATE, positionId INTEGER);";
+                + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, dateBorn DATE, positionId INT, img TEXT);";
 
         db.execSQL(query);
     }

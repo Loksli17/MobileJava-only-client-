@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.databaseapp.Worker.OpenHelper;
 import com.example.databaseapp.Worker.Worker;
@@ -21,6 +22,7 @@ public class DbWorkers {
     public DbWorkers(Context ctx){
         OpenHelper openHelper = new OpenHelper(ctx);
         this.db = openHelper.getWritableDatabase();
+//        openHelper.onUpgrade(this.db, 1, 2);
     }
 
 
@@ -29,6 +31,7 @@ public class DbWorkers {
         cv.put("name", worker.getName());
         cv.put("positionId", worker.getPositionId());
         cv.put("dateBorn", worker.getDbDateBorn());
+        cv.put("img", worker.getImg());
         return db.insert("worker", null, cv);
     }
 
@@ -47,8 +50,12 @@ public class DbWorkers {
 
     public ArrayList<Worker> getMany(int skip, int take){
 
-        Cursor            cursor  = db.query(DbWorkers.tableName, null, null, null, null, null, "id DESC", skip + ", " + take);
+        Log.d("QUERY", "GetMany start");
+
+        Cursor            cursor  = db.query("worker", null, null, null, null, null, "id DESC", skip + ", " + take);
         ArrayList<Worker> workers = new ArrayList<>();
+
+        Log.d("QUERY", "kek");
 
         cursor.moveToFirst();
 
@@ -56,11 +63,11 @@ public class DbWorkers {
             do {
                 long   id         = cursor.getLong(0);
                 String name       = cursor.getString(1);
-                Date   dateBorn   = new Date(cursor.getString(2));
+//                Date   dateBorn   = new Date(cursor.getString(2));
                 long   positionId = cursor.getLong(3);
                 String img        = cursor.getString(4);
 
-                Worker worker = new WorkerBuilder().setId(id).setDateBorn(dateBorn).setImg(img).setName(name).setPositionId(positionId).getWorker();
+                Worker worker = new WorkerBuilder().setId(id).setDateBorn(new Date()).setImg(img).setName(name).setPositionId(positionId).getWorker();
                 workers.add(worker);
             } while (cursor.moveToNext());
         }
