@@ -47,7 +47,9 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 
         Worker worker = workers.get(position);
 
+        //There are add data in xml-file from worker object
         holder.workerName.setText(worker.getName());
+        holder.workerId.setText(String.valueOf(worker.getId()));
 
         String uri = "@drawable/" + worker.getImg();
         int imageResource = inflater.getContext().getResources().getIdentifier(uri, null, inflater.getContext().getPackageName());
@@ -56,17 +58,15 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 
         holder.workerPosition.setText(String.valueOf(worker.getPositionId()));
 
-        holder.moreWorkerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context ctx = inflater.getContext(); //This is amazing way to get current Activity =))))
+        holder.moreWorkerBtn.setOnClickListener(v -> {
+            Context ctx = inflater.getContext(); //This is amazing way to get current Activity =))))
 
-                Intent intent = new Intent(ctx, WorkerViewActivity.class);
-                intent.putExtra("id", worker.getId());
-                ctx.startActivity(intent);
-            }
+            Intent intent = new Intent(ctx, WorkerViewActivity.class);
+            intent.putExtra("id", worker.getId());
+            ctx.startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -77,7 +77,7 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView workerName, workerPosition;
+        public TextView workerName, workerPosition, workerId;
         public ImageView workerImage;
         public Button moreWorkerBtn;
 
@@ -88,6 +88,7 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
             workerPosition = itemView.findViewById(R.id.positionWorkerView);
             workerImage    = itemView.findViewById(R.id.imageWorkerView);
             moreWorkerBtn  = itemView.findViewById(R.id.moreWorkerBtn);
+            workerId       = itemView.findViewById(R.id.idWorkerView);
         }
     }
 }

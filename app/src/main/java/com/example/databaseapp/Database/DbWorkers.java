@@ -50,7 +50,7 @@ public class DbWorkers {
 
     public ArrayList<Worker> getMany(int skip, int take){
 
-        Cursor            cursor  = db.query(DbWorkers.tableName, null, null, null, null, null, "id DESC", skip + ", " + take);
+        Cursor cursor = db.rawQuery("select * from " + DbWorkers.tableName + " order by id desc " + " limit " + skip + ", " + take, null);
         ArrayList<Worker> workers = new ArrayList<>();
 
         cursor.moveToFirst();
@@ -63,7 +63,7 @@ public class DbWorkers {
                 long   positionId = cursor.getLong(3);
                 String img        = cursor.getString(4);
 
-                //It is OOP pattern Builder. Why pattern? Because I wanna flex.
+                //It is OOP-pattern Builder. Why pattern? Because I wanna flex.
                 Worker worker = new WorkerBuilder()
                         .setId(id)
                         .setDateBorn(new Date())
@@ -82,12 +82,12 @@ public class DbWorkers {
     public Worker getOne(long id) {
 
         Cursor cursor = db.rawQuery("Select * from " + DbWorkers.tableName + " where id = " + id, null);
-        Worker worker = new Worker();
+        Worker worker;
 
         cursor.moveToFirst();
 
         String name       = cursor.getString(1);
-//                Date   dateBorn   = new Date(cursor.getString(2));
+//                Date   dateBorn   = new Date(cursor.getString(2)); // i should win it!!!
         long   positionId = cursor.getLong(3);
         String img        = cursor.getString(4);
 
@@ -101,4 +101,14 @@ public class DbWorkers {
         return worker;
     }
 
+
+    public void removeOne(long id){
+       Cursor cursor = db.rawQuery("Delete from " + DbWorkers.tableName + " where id = " + id, null);
+       cursor.moveToFirst();
+    }
+
+
+    public void editOne(Worker w) {
+
+    }
 }

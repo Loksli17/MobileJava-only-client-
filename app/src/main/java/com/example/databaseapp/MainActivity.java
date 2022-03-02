@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     WorkerAdapter adapter;
 
     int take = 10;
+    int skip = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.getWorkers();
         this.bindCreateWorkersBtn();
+        this.bindGetMoreWorkersBtn();
     }
 
 
@@ -66,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createWorkers();
+            }
+        });
+    }
+
+
+    private void bindGetMoreWorkersBtn() {
+
+        Button btn = findViewById(R.id.getMoreWorkersBtn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getWorkers();
             }
         });
     }
@@ -94,10 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
         AsyncTask.execute(() -> {
             try {
-                ArrayList<Worker> workersDb = workersDbConn.getMany(0, take);
+                ArrayList<Worker> workersDb = workersDbConn.getMany(skip, take);
                 workers.addAll(workersDb);
 
                 runOnUiThread(() -> {
+                    skip += take;
                     Toast.makeText(MainActivity.this, "Workers were downloaded", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
                 });

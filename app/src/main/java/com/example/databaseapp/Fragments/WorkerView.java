@@ -1,6 +1,8 @@
 package com.example.databaseapp.Fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.databaseapp.Database.DbWorkers;
+import com.example.databaseapp.MainActivity;
 import com.example.databaseapp.R;
 
 /**
@@ -42,6 +47,10 @@ public class WorkerView extends Fragment {
     TextView nameView;
     TextView positionView;
     TextView cvView;
+
+    Button deleteBtn;
+
+    LayoutInflater inflater;
 
     public WorkerView() {
         // Required empty public constructor
@@ -81,6 +90,7 @@ public class WorkerView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        this.inflater = inflater;
         return inflater.inflate(R.layout.fragment_worker_view, container, false);
     }
 
@@ -93,6 +103,27 @@ public class WorkerView extends Fragment {
         nameView     = view.findViewById(R.id.wokerViewName);
         positionView = view.findViewById(R.id.workerViewPosition);
         cvView       = view.findViewById(R.id.workerViewCV);
+
+        deleteBtn    = view.findViewById(R.id.deleteWorkerBtn);
+
+        deleteBtn.setOnClickListener(v -> {
+
+            DbWorkers workersDbConn = new DbWorkers(inflater.getContext());
+
+            AsyncTask.execute(() -> {
+
+                try {
+                    workersDbConn.removeOne(id);
+
+                    getActivity().runOnUiThread(() -> {
+                        Intent intent = new Intent(inflater.getContext(), MainActivity.class);
+                        startActivity(intent);
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            });
+        });
 
         this.pushDataInFragment();
     }
