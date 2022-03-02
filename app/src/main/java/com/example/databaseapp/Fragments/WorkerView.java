@@ -21,6 +21,11 @@ import android.widget.Toast;
 import com.example.databaseapp.Database.DbWorkers;
 import com.example.databaseapp.MainActivity;
 import com.example.databaseapp.R;
+import com.example.databaseapp.WorkerEditActivity;
+
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +40,7 @@ public class WorkerView extends Fragment {
     private static final String ARG_PARAM4 = "position";
     private static final String ARG_PARAM5 = "cv";
     private static final String ARG_PARAM6 = "date";
+    private static final String ARG_PARAM7 = "positionId";
 
     // TODO: Rename and change types of parameters
     private long id;
@@ -44,6 +50,9 @@ public class WorkerView extends Fragment {
     private String cv;
     private String date;
 
+    private Date utilDate;
+    private long positionId;
+
     ImageView imageView;
     TextView nameView;
     TextView positionView;
@@ -52,6 +61,7 @@ public class WorkerView extends Fragment {
     TextView idView;
 
     Button deleteBtn;
+    Button updateBtn;
 
     LayoutInflater inflater;
 
@@ -70,6 +80,11 @@ public class WorkerView extends Fragment {
             position = getArguments().getString(ARG_PARAM4);
             cv       = getArguments().getString(ARG_PARAM5);
             date     = getArguments().getString(ARG_PARAM6);
+
+            positionId = getArguments().getLong(ARG_PARAM7);
+
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            utilDate   = formatter.parse(date, new ParsePosition(0));;
         }
     }
 
@@ -93,7 +108,8 @@ public class WorkerView extends Fragment {
         dateView     = view.findViewById(R.id.workerViewDate);
         idView       = view.findViewById(R.id.workerViewId);
 
-        deleteBtn    = view.findViewById(R.id.deleteWorkerBtn);
+        deleteBtn = view.findViewById(R.id.deleteWorkerBtn);
+        updateBtn = view.findViewById(R.id.updateWorkerBtn);
 
         deleteBtn.setOnClickListener(v -> {
 
@@ -115,11 +131,24 @@ public class WorkerView extends Fragment {
             });
         });
 
+        updateBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(inflater.getContext(), WorkerEditActivity.class);
+
+            intent.putExtra("id", id);
+            intent.putExtra("name", name);
+            intent.putExtra("positionId", positionId);
+            intent.putExtra("cv", cv);
+            intent.putExtra("img", img);
+            intent.putExtra("date", date);
+
+            startActivity(intent);
+        });
+
         this.pushDataInFragment();
     }
 
 
-    private void pushDataInFragment(){
+    private void pushDataInFragment() {
 
         String uri = "@drawable/" + img;
         int imageResource = getResources().getIdentifier(uri, null, getContext().getPackageName());

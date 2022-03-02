@@ -20,6 +20,7 @@ public class WorkerViewActivity extends AppCompatActivity {
     WorkerView workerView;
     long       id = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,6 +65,7 @@ public class WorkerViewActivity extends AppCompatActivity {
 
 
     private void createWorkerViewFragment(){
+
         Bundle bundle = new Bundle();
 
         bundle.putLong("id", id);
@@ -72,6 +74,7 @@ public class WorkerViewActivity extends AppCompatActivity {
         bundle.putString("position", "Position");
         bundle.putString("cv",  worker.getCv());
         bundle.putString("date", worker.getDbDateBorn());
+        bundle.putLong("positionId", worker.getPositionId());
 
         workerView = new WorkerView();
         workerView.setArguments(bundle);
