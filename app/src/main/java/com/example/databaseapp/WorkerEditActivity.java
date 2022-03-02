@@ -5,13 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.databaseapp.Fragments.WorkerForm;
-import com.example.databaseapp.Fragments.WorkerView;
 import com.example.databaseapp.Worker.Worker;
 import com.example.databaseapp.Worker.WorkerBuilder;
-
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class WorkerEditActivity extends AppCompatActivity {
@@ -63,7 +58,7 @@ public class WorkerEditActivity extends AppCompatActivity {
         form.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.editFormWrap, form)
+                .add(R.id.editFormWorkerWrap, form)
                 .commit();
     }
 }

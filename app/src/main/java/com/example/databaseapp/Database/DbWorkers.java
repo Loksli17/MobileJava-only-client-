@@ -119,6 +119,7 @@ public class DbWorkers {
        cursor.moveToFirst();
     }
 
+
     public int getCount(){
         Cursor cursor = db.rawQuery("Select Count(*) from " + DbWorkers.tableName + "", null);
         cursor.moveToNext();

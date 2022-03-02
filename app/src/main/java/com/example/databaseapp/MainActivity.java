@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
@@ -59,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.getCount();
         this.getWorkers();
+
         this.bindCreateWorkersBtn();
         this.bindGetMoreWorkersBtn();
+        this.bindNewWorkerBtn();
     }
 
 
@@ -95,11 +98,18 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn = findViewById(R.id.getMoreWorkersBtn);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getWorkers();
-            }
+        btn.setOnClickListener(v -> {
+            getWorkers();
+        });
+    }
+
+    private void bindNewWorkerBtn() {
+
+        Button btn = findViewById(R.id.newWorkerBtn);
+
+        btn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, WorkerAddActivity.class);
+            startActivity(intent);
         });
     }
 

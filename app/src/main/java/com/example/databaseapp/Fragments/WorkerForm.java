@@ -56,13 +56,17 @@ public class WorkerForm extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id       = getArguments().getLong(ARG_PARAM1);
-            name     = getArguments().getString(ARG_PARAM2);
-            img      = getArguments().getString(ARG_PARAM3);
-            position = getArguments().getString(ARG_PARAM4);
-            cv       = getArguments().getString(ARG_PARAM5);
-            date     = getArguments().getString(ARG_PARAM6);
+
             action   = getArguments().getString(ARG_PARAM7);
+
+            if(action == "edit"){
+                id       = getArguments().getLong(ARG_PARAM1);
+                name     = getArguments().getString(ARG_PARAM2);
+                img      = getArguments().getString(ARG_PARAM3);
+                position = getArguments().getString(ARG_PARAM4);
+                cv       = getArguments().getString(ARG_PARAM5);
+                date     = getArguments().getString(ARG_PARAM6);
+            }
         }
     }
 
