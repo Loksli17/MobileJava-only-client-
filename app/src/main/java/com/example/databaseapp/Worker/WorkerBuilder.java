@@ -32,6 +32,11 @@ public class WorkerBuilder {
         return this;
     }
 
+    public WorkerBuilder setCv(String cv){
+        this.worker.setCv(cv);
+        return this;
+    }
+
     public Worker getWorker(){
         return this.worker;
     }

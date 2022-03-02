@@ -15,6 +15,7 @@ public class Worker implements Serializable {
     private Date dateBorn   = new Date();
     private long positionId = 1;
     private String img      = "kek";
+    private String cv       = "";
 
 
     public void setName(String name) {
@@ -37,6 +38,12 @@ public class Worker implements Serializable {
         this.img = img;
     }
 
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
+
+
+
     public String getName() {
         return name;
     }
@@ -56,6 +63,12 @@ public class Worker implements Serializable {
     public String getImg() {
         return img;
     }
+
+    public String getCv() {
+        return cv;
+    }
+
+
 
     public String getDbDateBorn() {
 

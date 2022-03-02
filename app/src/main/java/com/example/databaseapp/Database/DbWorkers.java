@@ -26,16 +26,19 @@ public class DbWorkers {
     public DbWorkers(Context ctx){
         OpenHelper openHelper = new OpenHelper(ctx);
         this.db = openHelper.getWritableDatabase();
-//        openHelper.onUpgrade(this.db, 1, 2); //! for db update. You should uncommit this code for update db
+//        openHelper.onUpgrade(this.db, 2, 3); //! for db update. You should uncommit this code for update db and change db versions
     }
 
 
     public long insert(Worker worker){
         ContentValues cv = new ContentValues();
+
         cv.put("name", worker.getName());
         cv.put("positionId", worker.getPositionId());
         cv.put("dateBorn", worker.getDbDateBorn());
         cv.put("img", worker.getImg());
+        cv.put("cv", worker.getCv());
+
         return db.insert("worker", null, cv);
     }
 
@@ -70,7 +73,7 @@ public class DbWorkers {
                 //It is OOP-pattern Builder. Why pattern? Because I wanna flex.
                 Worker worker = new WorkerBuilder()
                         .setId(id)
-                        .setDateBorn(new Date())
+                        .setDateBorn(dateBorn)
                         .setImg(img).setName(name)
                         .setPositionId(positionId)
                         .getWorker();
@@ -95,11 +98,13 @@ public class DbWorkers {
         Date   dateBorn   = formatter.parse(cursor.getString(2), new ParsePosition(0));
         long   positionId = cursor.getLong(3);
         String img        = cursor.getString(4);
+        String cv         = cursor.getString(5);
 
         Log.d("date", dateBorn.toString());
 
         worker = new WorkerBuilder()
                 .setId(id)
+                .setCv(cv)
                 .setDateBorn(dateBorn)
                 .setImg(img).setName(name)
                 .setPositionId(positionId)

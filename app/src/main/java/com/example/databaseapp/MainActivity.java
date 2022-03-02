@@ -115,9 +115,12 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Toast.makeText(MainActivity.this, "New workers was created", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
+
+                    currentCount = workers.size();
+                    currentCountView.setText(String.valueOf(currentCount));
+                    getCount();
                 });
 
-                getWorkers();
             } catch (Exception e){
                 e.printStackTrace();
             }
