@@ -1,5 +1,7 @@
 package com.example.databaseapp.Worker;
 
+import android.util.Log;
+
 import java.sql.Date;  //!!! IMPORTANT THIS TYPE DIFFERS FROM java.util.date
 import java.util.ArrayList;
 
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 
 public class WorkerDirector {
 
-    static int amount = 20;
+    static int amount = 1;
 
 
     private static int randNum() {
@@ -83,11 +85,12 @@ public class WorkerDirector {
             randNumbers[2] = WorkerDirector.randNum();
             randNumbers[3] = WorkerDirector.randNum();
 
+            java.util.Date date = new java.util.Date(dates.get(randNumbers[2]).getTime());
+
             Worker worker = new WorkerBuilder()
-                    .setId(1)
                     .setName(names.get(randNumbers[0]))
                     .setImg(images.get(randNumbers[1]))
-                    .setDateBorn(dates.get(randNumbers[2]))
+                    .setDateBorn(date)
                     .setPositionId(positionIds.get(randNumbers[3]))
                     .getWorker();
 

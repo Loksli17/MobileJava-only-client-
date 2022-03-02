@@ -1,5 +1,7 @@
 package com.example.databaseapp.Worker;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,7 +58,9 @@ public class Worker implements Serializable {
     }
 
     public String getDbDateBorn() {
-        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Log.d("date-format", formatter.format(this.dateBorn));
         return formatter.format(this.dateBorn);
     }
 }

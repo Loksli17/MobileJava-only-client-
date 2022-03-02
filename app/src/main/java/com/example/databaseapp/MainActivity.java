@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.databaseapp.Adapters.WorkerAdapter;
@@ -35,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
     int take = 10;
     int skip = 0;
 
+    int currentCount = 0;
+    int maxCount     = 0;
+
+    TextView currentCountView;
+    TextView maxCountView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +54,22 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        this.initViewElements();
+        this.initAdapter();
+
+        this.getCount();
+        this.getWorkers();
+        this.bindCreateWorkersBtn();
+        this.bindGetMoreWorkersBtn();
+    }
+
+
+    private void initViewElements(){
+        currentCountView = findViewById(R.id.currentCountView);
+        maxCountView     = findViewById(R.id.maxCountView);
+    }
+
+    private void initAdapter(){
         adapter = new WorkerAdapter(this, workers);
         RecyclerView recyclerView = findViewById(R.id.WorkerAdapterView);
 
@@ -53,12 +77,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         adapter.notifyDataSetChanged();
-
-        this.getWorkers();
-        this.bindCreateWorkersBtn();
-        this.bindGetMoreWorkersBtn();
     }
-
 
     private void bindCreateWorkersBtn(){
 
@@ -71,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void bindGetMoreWorkersBtn() {
 
@@ -98,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "New workers was created", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
                 });
+
+                getWorkers();
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -115,9 +135,30 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     skip += take;
                     Toast.makeText(MainActivity.this, "Workers were downloaded", Toast.LENGTH_SHORT).show();
+
+                    currentCount = workers.size();
+                    currentCountView.setText(String.valueOf(currentCount));
+
                     adapter.notifyDataSetChanged();
                 });
             } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+
+    private void getCount() {
+
+        AsyncTask.execute(() -> {
+            try {
+                int count = workersDbConn.getCount();
+
+                runOnUiThread(() -> {
+                    maxCount = count;
+                    maxCountView.setText(String.valueOf(maxCount));
+                });
+            } catch (Exception e){
                 e.printStackTrace();
             }
         });

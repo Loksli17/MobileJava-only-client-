@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.databaseapp.Database.DbWorkers;
 import com.example.databaseapp.MainActivity;
@@ -23,8 +24,6 @@ import com.example.databaseapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WorkerView#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class WorkerView extends Fragment {
 
@@ -35,6 +34,7 @@ public class WorkerView extends Fragment {
     private static final String ARG_PARAM3 = "img";
     private static final String ARG_PARAM4 = "position";
     private static final String ARG_PARAM5 = "cv";
+    private static final String ARG_PARAM6 = "date";
 
     // TODO: Rename and change types of parameters
     private long id;
@@ -42,11 +42,14 @@ public class WorkerView extends Fragment {
     private String img;
     private String position;
     private String cv;
+    private String date;
 
     ImageView imageView;
     TextView nameView;
     TextView positionView;
     TextView cvView;
+    TextView dateView;
+    TextView idView;
 
     Button deleteBtn;
 
@@ -56,23 +59,6 @@ public class WorkerView extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WorkerView.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WorkerView newInstance(String param1, String param2) {
-        WorkerView fragment = new WorkerView();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +69,7 @@ public class WorkerView extends Fragment {
             img      = getArguments().getString(ARG_PARAM3);
             position = getArguments().getString(ARG_PARAM4);
             cv       = getArguments().getString(ARG_PARAM5);
+            date     = getArguments().getString(ARG_PARAM6);
         }
     }
 
@@ -103,6 +90,8 @@ public class WorkerView extends Fragment {
         nameView     = view.findViewById(R.id.wokerViewName);
         positionView = view.findViewById(R.id.workerViewPosition);
         cvView       = view.findViewById(R.id.workerViewCV);
+        dateView     = view.findViewById(R.id.workerViewDate);
+        idView       = view.findViewById(R.id.workerViewId);
 
         deleteBtn    = view.findViewById(R.id.deleteWorkerBtn);
 
@@ -116,6 +105,7 @@ public class WorkerView extends Fragment {
                     workersDbConn.removeOne(id);
 
                     getActivity().runOnUiThread(() -> {
+                        Toast.makeText(inflater.getContext(), "Worker was deleted", Toast.LENGTH_SHORT);
                         Intent intent = new Intent(inflater.getContext(), MainActivity.class);
                         startActivity(intent);
                     });
@@ -142,5 +132,7 @@ public class WorkerView extends Fragment {
         nameView.setText(name);
         positionView.setText(position);
         cvView.setText(cv);
+        dateView.setText(date);
+        idView.setText(String.valueOf(id));
     }
 }

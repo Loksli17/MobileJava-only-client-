@@ -10,6 +10,8 @@ import com.example.databaseapp.Worker.OpenHelper;
 import com.example.databaseapp.Worker.Worker;
 import com.example.databaseapp.Worker.WorkerBuilder;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,6 +20,8 @@ public class DbWorkers {
 
     private final static String tableName = "worker";
     private SQLiteDatabase db;
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public DbWorkers(Context ctx){
         OpenHelper openHelper = new OpenHelper(ctx);
@@ -59,7 +63,7 @@ public class DbWorkers {
             do {
                 long   id         = cursor.getLong(0);
                 String name       = cursor.getString(1);
-//                Date   dateBorn   = new Date(cursor.getString(2));
+                Date   dateBorn   = formatter.parse(cursor.getString(2), new ParsePosition(0));
                 long   positionId = cursor.getLong(3);
                 String img        = cursor.getString(4);
 
@@ -79,21 +83,24 @@ public class DbWorkers {
     }
 
 
-    public Worker getOne(long id) {
+    public Worker getOne(long queryId) {
 
-        Cursor cursor = db.rawQuery("Select * from " + DbWorkers.tableName + " where id = " + id, null);
+        Cursor cursor = db.rawQuery("Select * from " + DbWorkers.tableName + " where id = " + queryId, null);
         Worker worker;
 
         cursor.moveToFirst();
 
+        long   id         = cursor.getLong(0);
         String name       = cursor.getString(1);
-//                Date   dateBorn   = new Date(cursor.getString(2)); // i should win it!!!
+        Date   dateBorn   = formatter.parse(cursor.getString(2), new ParsePosition(0));
         long   positionId = cursor.getLong(3);
         String img        = cursor.getString(4);
 
+        Log.d("date", dateBorn.toString());
+
         worker = new WorkerBuilder()
                 .setId(id)
-                .setDateBorn(new Date())
+                .setDateBorn(dateBorn)
                 .setImg(img).setName(name)
                 .setPositionId(positionId)
                 .getWorker();
@@ -105,6 +112,13 @@ public class DbWorkers {
     public void removeOne(long id){
        Cursor cursor = db.rawQuery("Delete from " + DbWorkers.tableName + " where id = " + id, null);
        cursor.moveToFirst();
+    }
+
+    public int getCount(){
+        Cursor cursor = db.rawQuery("Select Count(*) from " + DbWorkers.tableName + "", null);
+        cursor.moveToNext();
+
+        return cursor.getInt(0);
     }
 
 
