@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DatabaseApp">
-        <activity android:name=".WorkerAddActivity"></activity>
+        <activity android:name=".PositionActivity"></activity>
+        <activity android:name=".WorkerAddActivity" />
         <activity android:name=".WorkerEditActivity" />
         <activity android:name=".WorkerViewActivity" />
         <activity android:name=".MainActivity">
