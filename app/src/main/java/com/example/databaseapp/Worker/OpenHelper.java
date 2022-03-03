@@ -4,10 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 public class OpenHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME    = "DbExample";
-    private static final int    DATABASE_VERSION = 1;
+    private static final int    DATABASE_VERSION = 2;
 
     private static final String TABLE_WORKER = "worker";
 
