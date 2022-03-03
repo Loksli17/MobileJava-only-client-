@@ -1,12 +1,18 @@
 package com.example.databaseapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.Toast;
 
+import com.example.databaseapp.Adapters.PositionAdapter;
+import com.example.databaseapp.Adapters.WorkerAdapter;
 import com.example.databaseapp.Database.DbPositions;
 import com.example.databaseapp.Position.Position;
 
@@ -17,6 +23,7 @@ public class PositionActivity extends AppCompatActivity {
 
     DbPositions positionsDbConn;
     ArrayList<Position> positions = new ArrayList<>();
+    PositionAdapter adapter;
 
 
     @Override
@@ -31,7 +38,8 @@ public class PositionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        getPositions();
+        this.initAdapter();
+        this.getPositions();
 
 //        ArrayList<Position> positions = new ArrayList<>();
 //
@@ -54,12 +62,28 @@ public class PositionActivity extends AppCompatActivity {
     }
 
 
+    private void initAdapter(){
+
+        adapter = new PositionAdapter(this, positions);
+        RecyclerView    recyclerView = findViewById(R.id.PositionAdapterView);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(PositionActivity.this));
+
+        adapter.notifyDataSetChanged();
+    }
+
+
     public void getPositions(){
 
         AsyncTask.execute(() -> {
 
             try {
                 positions.addAll(positionsDbConn.getMany());
+
+                runOnUiThread(() -> {
+                    adapter.notifyDataSetChanged();
+                });
             } catch (Exception e){
                 e.printStackTrace();
             }
