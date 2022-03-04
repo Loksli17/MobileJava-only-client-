@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.databaseapp.Fragments.MenuFragment;
 import com.example.databaseapp.Fragments.WorkerForm;
 
 
 public class WorkerAddActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +18,7 @@ public class WorkerAddActivity extends AppCompatActivity {
 
         this.createWorkerViewFragment();
     }
+
 
     private void createWorkerViewFragment(){
 
@@ -28,5 +31,19 @@ public class WorkerAddActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.addFormWorkerWrap, form)
                 .commit();
+
+        this.initMenu();
     }
+
+
+    private void initMenu() {
+
+        MenuFragment fragment = new MenuFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.workerAddMenuWrap, fragment)
+                .commit();
+    }
+
+
 }

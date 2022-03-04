@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.databaseapp.Adapters.PositionAdapter;
 import com.example.databaseapp.Adapters.WorkerAdapter;
 import com.example.databaseapp.Database.DbPositions;
+import com.example.databaseapp.Fragments.MenuFragment;
 import com.example.databaseapp.Position.Position;
 
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class PositionActivity extends AppCompatActivity {
         this.initAdapter();
         this.getPositions();
 
+        this.initMenu();
+
 //        ArrayList<Position> positions = new ArrayList<>();
 //
 //        positions.add(new Position(2,"junior programmer"));
@@ -59,6 +62,15 @@ public class PositionActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 //        });
+    }
+
+    private void initMenu() {
+
+        MenuFragment fragment = new MenuFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.positionMenuWrap, fragment)
+                .commit();
     }
 
 

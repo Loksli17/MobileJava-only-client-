@@ -129,7 +129,16 @@ public class DbWorkers {
 
 
 
-    public void editOne(Worker w) {
+    public int editOne(Worker w) {
+        ContentValues contentValues = new ContentValues();
 
+        contentValues.put("name", w.getName());
+        contentValues.put("positionId", 1);
+        contentValues.put("dateBorn", w.getDbDateBorn());
+        contentValues.put("cv", w.getCv());
+
+//        Log.d("update", w.getName())
+
+        return this.db.update(tableName, contentValues, "id = " + w.getId(), null);
     }
 }

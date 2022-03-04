@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.databaseapp.Database.DbWorkers;
+import com.example.databaseapp.Fragments.MenuFragment;
 import com.example.databaseapp.Fragments.WorkerView;
 import com.example.databaseapp.Worker.Worker;
 
@@ -40,6 +41,17 @@ public class WorkerViewActivity extends AppCompatActivity {
         }
 
         getWorker();
+        initMenu();
+    }
+
+
+    private void initMenu() {
+
+        MenuFragment fragment = new MenuFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.workerViewMenuWrap, fragment)
+                .commit();
     }
 
 

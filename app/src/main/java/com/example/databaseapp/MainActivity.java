@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         this.bindGetMoreWorkersBtn();
         this.bindNewWorkerBtn();
 
-        this.bindShowPositionBtn();
+//        this.bindShowPositionBtn();
         this.initMenu();
     }
 
@@ -126,17 +126,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
-    private void bindShowPositionBtn() {
-
-        Button btn = findViewById(R.id.showPositionBtn);
-
-        btn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PositionActivity.class);
-            startActivity(intent);
-        });
-    }
-
 
     private void createWorkers(){
 
