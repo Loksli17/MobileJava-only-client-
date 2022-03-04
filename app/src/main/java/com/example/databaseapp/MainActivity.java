@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.databaseapp.Adapters.WorkerAdapter;
 import com.example.databaseapp.Database.DbWorkers;
+import com.example.databaseapp.Fragments.MenuFragment;
 import com.example.databaseapp.Worker.Worker;
 import com.example.databaseapp.Worker.WorkerBuilder;
 import com.example.databaseapp.Worker.WorkerDirector;
@@ -66,6 +67,17 @@ public class MainActivity extends AppCompatActivity {
         this.bindNewWorkerBtn();
 
         this.bindShowPositionBtn();
+        this.initMenu();
+    }
+
+
+    private void initMenu() {
+
+        MenuFragment fragment = new MenuFragment();
+
+        getSupportFragmentManager().beginTransaction()
+            .add(R.id.mainMenuWrap, fragment)
+            .commit();
     }
 
 
