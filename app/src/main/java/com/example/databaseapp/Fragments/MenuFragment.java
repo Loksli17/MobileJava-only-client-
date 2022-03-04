@@ -9,7 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,42 +56,14 @@ public class MenuFragment extends Fragment {
             ConstraintLayout layout = view.findViewById(R.id.contentMenu);
 
             int visibility = layout.getVisibility();
-            Log.d("toggle", String.valueOf(visibility));
 
-            if(visibility != View.VISIBLE){
-                layout.setVisibility(View.VISIBLE);
-            } else {
-                layout.setVisibility(View.INVISIBLE);
-            }
+            Transition transition = new Slide(Gravity.RIGHT);
+            transition.setDuration(200);
+            transition.addTarget(R.id.contentMenu);
 
-//            view.animate()
-////                .translationY(layout.getHeight())
-////                .alpha(0.0f)
-////                .setDuration(300)
-//                .setListener(new AnimatorListenerAdapter() {
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        super.onAnimationEnd(animation);
-//
-//                        if(visibility != View.VISIBLE){
-//                            layout.setVisibility(View.VISIBLE);
-//                        } else {
-//                            layout.setVisibility(View.INVISIBLE);
-//                        }
-//                    }
-//                });
+            TransitionManager.beginDelayedTransition(view.findViewById(R.id.rootMenuContainer), transition);
+            layout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
         });
 
-//        view.animate()
-//                .translationY(view.getHeight())
-//                .alpha(0.0f)
-//                .setDuration(300)
-//                .setListener(new AnimatorListenerAdapter() {
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        super.onAnimationEnd(animation);
-//                        view.setVisibility(View.GONE);
-//                    }
-//                });
     }
 }
